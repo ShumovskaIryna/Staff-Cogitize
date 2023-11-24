@@ -11,6 +11,15 @@ body {
   position: fixed;
   background-image: var(--background-img);
   background-size: cover;
+  font-size: 9px;
+}
+
+.bg-light-grey{
+  background-color: #303038;
+}
+.bg-dark-grey{
+  background-color: #292930;
+  border: 2px solid #303038;
 }
 
 @media screen and (max-width: 1250px) {
