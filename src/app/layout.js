@@ -14,9 +14,9 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={inter.className}>
-        <div className="fixed top-0 left-0 right-0 bottom-0 z-40 bg-gray-900 bg-opacity-70 flex items-center justify-center">
-          <div className="w-11/12 h-4/5 md:w-4/5 xl:w-3/5 py-5 bg-dark-grey rounded flex items-center justify-center">
-            <div className="flex flex-col w-full h-full mx-5 my-5 rounded">
+        <div className="fixed top-0 left-0 right-0 bottom-0 z-40 transp flex items-center justify-center">
+          <div className="w-11/12 h-4/5 md:w-4/5 xl:w-3/5 py-3 bg-dark-grey rounded flex items-center justify-center">
+            <div className="flex flex-col w-full h-full border-light-grey mx-3 my-3 rounded">
             <Navbar />
             {children}
             </div>

@@ -1,14 +1,14 @@
 "use client";
 
 import { Flex } from "@chakra-ui/react";
-import PositionsForm from "../../components/PositionForm";
-import { FormProvider } from "../../context/FormContext";
+import PositionsForm from "../components/PositionForm";
+import { FormProvider } from "../context/FormContext";
 import dynamic from "next/dynamic";
 import React, { useState } from "react";
 import { DragDropContext } from "react-beautiful-dnd";
-import "../globals.css";
+import "./globals.css";
 
-const Column = dynamic(() => import("../../components/Colums"), { ssr: false });
+const Column = dynamic(() => import("../components/Colums"), { ssr: false });
 
 const reorderTasks = (tasks, startIndex, endIndex) => {
   const newTaskList = Array.from(tasks);
@@ -120,26 +120,34 @@ export default function PositionsPage() {
   };
 
   return (
-    <main className="flex flex-row w-full h-full pb-10 justify-center">
-      <div className="flex flex-col w-full h-full my-5 ml-5 mr-1">
-        <DragDropContext
-          onDragStart={onDragStart}
-          onDragUpdate={onDragUpdate}
-          onDragEnd={onDragEnd}
-        >
-          <Flex
-            flexDir="column"
-            bg="main-bg"
-            minH="100vh"
-            w="full"
-            color="white-text"
-            pb="2rem"
+    <main className="flex flex-row w-full h-full pb-8 justify-center">
+      <div className="flex flex-col w-1/3 h-8/12 my-3 ml-3 mr-1 justify-between">
+        <div className="h-11/12 w-full overflow-y-scroll">
+          <DragDropContext
+            onDragStart={onDragStart}
+            onDragUpdate={onDragUpdate}
+            onDragEnd={onDragEnd}
           >
-            <Column placeholderProps={placeholderProps} tasks={state.tasks} />
-          </Flex>
-        </DragDropContext>
+            <Flex
+              flexDir="column"
+              bg="main-bg"
+              // minH="100vh"
+              w="full"
+              color="white-text"
+              pb="2rem"
+            >
+              <Column placeholderProps={placeholderProps} tasks={state.tasks} />
+            </Flex>
+          </DragDropContext>
+        </div>
+        <button
+          type="button"
+          className="button text-white py-2 px-4 my-2 mb-6 rounded-md"
+        >
+          Создать новую должность
+        </button>
       </div>
-      <div className="flex flex-col w-full my-5 mr-5 ml-1 p-2 bg-light-grey rounded">
+      <div className="flex flex-col w-2/3 h-8/12 mt-3 mr-3 mb-5 ml-1 p-2 bg-light-grey rounded">
         <FormProvider>
           <PositionsForm />
         </FormProvider>
@@ -150,10 +158,12 @@ export default function PositionsPage() {
 
 const initialData = {
   tasks: [
-    { id: 1, content: "Новобранец", salary: "$50" },
-    { id: 2, content: "Рядовой", salary: "$80" },
-    { id: 3, content: "Сержант", salary: "$100" },
-    { id: 4, content: "Рядовой", salary: "$80" },
-    { id: 5, content: "Новобранец", salary: "$50" },
+    { id: 1, content: "Новобранец", salary: "$50", level: "10 заданий" },
+    { id: 2, content: "Рядовой", salary: "$80", level: "5 заданий" },
+    { id: 3, content: "Сержант", salary: "$100", level: "12 заданий" },
+    { id: 4, content: "Рядовой", salary: "$80", level: "20 заданий" },
+    { id: 5, content: "Новобранец", salary: "$50", level: "15 заданий" },
+    { id: 6, content: "Рядовой", salary: "$80", level: "20 заданий" },
+    { id: 7, content: "Новобранец", salary: "$50", level: "15 заданий" },
   ],
 };
