@@ -4,7 +4,7 @@ import { Draggable } from "react-beautiful-dnd";
 import { Droppable } from "react-beautiful-dnd";
 import "../app/globals.css";
 
-const Column = ({ tasks, placeholderProps }) => {
+const Column = ({ roles, placeholderProps }) => {
   return (
     <Droppable droppableId="col">
       {(droppableProvided) => (
@@ -14,7 +14,7 @@ const Column = ({ tasks, placeholderProps }) => {
           {...droppableProvided.droppableProps}
           ref={droppableProvided.innerRef}
         >
-          {tasks.map((task, index) => (
+          {roles.map((task, index) => (
             <Draggable
               key={task.id}
               draggableId={task.id.toString()}
@@ -45,14 +45,11 @@ const Column = ({ tasks, placeholderProps }) => {
                 >
                   <div className="flex flex-row w-full justify-between">
                     <Text className="flex flex-col my-5">
-                      <p className="text-gray-200 mb-1"> {task.content}</p>
+                      <p className="text-gray-200 mb-1"> {task.name}</p>
                       <p className="text-gray-600">{task.level}</p>
                     </Text>
                     <Text className="flex flex-row my-5">
-                      <p className="text-yellow-500 font-bold">
-                        {" "}
-                        {task.salary}
-                      </p>
+                      <p className="text-yellow-500 font-bold">{task.salary}</p>
                       <p className="text-gray-500">/час</p>
                     </Text>
                   </div>

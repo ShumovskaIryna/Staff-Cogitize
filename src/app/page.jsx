@@ -2,9 +2,9 @@
 
 import { Flex } from "@chakra-ui/react";
 import PositionsForm from "../components/PositionForm";
-import { FormProvider } from "../context/FormContext";
+import { FormContext } from "../context/FormContext";
 import dynamic from "next/dynamic";
-import React, { useState } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { DragDropContext } from "react-beautiful-dnd";
 import "./globals.css";
 
@@ -19,7 +19,12 @@ const reorderTasks = (tasks, startIndex, endIndex) => {
 
 export default function PositionsPage() {
   const queryAttr = "data-rbd-drag-handle-draggable-id";
-  const [state, setState] = useState(initialData);
+  const { roles, fetchData, setPositions } = useContext(FormContext);
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
   const [placeholderProps, setPlaceholderProps] = useState({});
 
   const getDraggedDom = (draggableId) => {
@@ -38,14 +43,9 @@ export default function PositionsPage() {
     ) {
       return;
     }
-    const { tasks } = state;
-    const newTasks = reorderTasks(tasks, source.index, destination.index);
+    const newTasks = reorderTasks(roles, source.index, destination.index);
 
-    const newState = {
-      ...state,
-      tasks: newTasks,
-    };
-    setState(newState);
+    setPositions(newTasks);
   };
 
   const onDragUpdate = (result) => {
@@ -136,7 +136,7 @@ export default function PositionsPage() {
               color="white-text"
               pb="2rem"
             >
-              <Column placeholderProps={placeholderProps} tasks={state.tasks} />
+              <Column placeholderProps={placeholderProps} roles={roles} />
             </Flex>
           </DragDropContext>
         </div>
@@ -148,9 +148,7 @@ export default function PositionsPage() {
         </button>
       </div>
       <div className="flex flex-col w-2/3 h-8/12 mt-3 mr-3 mb-5 ml-1 p-2 bg-light-grey rounded">
-        <FormProvider>
-          <PositionsForm />
-        </FormProvider>
+        <PositionsForm />
       </div>
     </main>
   );
@@ -158,12 +156,12 @@ export default function PositionsPage() {
 
 const initialData = {
   tasks: [
-    { id: 1, content: "Новобранец", salary: "$50", level: "10 заданий" },
-    { id: 2, content: "Рядовой", salary: "$80", level: "5 заданий" },
-    { id: 3, content: "Сержант", salary: "$100", level: "12 заданий" },
-    { id: 4, content: "Рядовой", salary: "$80", level: "20 заданий" },
-    { id: 5, content: "Новобранец", salary: "$50", level: "15 заданий" },
-    { id: 6, content: "Рядовой", salary: "$80", level: "20 заданий" },
-    { id: 7, content: "Новобранец", salary: "$50", level: "15 заданий" },
+    { id: 1, name: "Новобранец", salary: "$50", level: "10 заданий" },
+    { id: 2, name: "Рядовой", salary: "$80", level: "5 заданий" },
+    { id: 3, name: "Сержант", salary: "$100", level: "12 заданий" },
+    { id: 4, name: "Рядовой", salary: "$80", level: "20 заданий" },
+    { id: 5, name: "Новобранец", salary: "$50", level: "15 заданий" },
+    { id: 6, name: "Рядовой", salary: "$80", level: "20 заданий" },
+    { id: 7, name: "Новобранец", salary: "$50", level: "15 заданий" },
   ],
 };
