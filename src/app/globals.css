@@ -11,6 +11,9 @@ body {
   position: fixed;
   background-image: var(--background-img);
   background-size: cover;
+  font-size: 7px;
+}
+.text-larger{
   font-size: 9px;
 }
 
@@ -40,6 +43,28 @@ body {
 }
 .button{
   background-color: #6764F1;
+}
+.checkbox {
+  position: relative;
+  width: 14px;
+  height: 14px;
+  border-radius: 5%;
+  border: 1px solid #ffffff4c;
+}
+.checkbox.checked {
+  border: 1px solid #6764f1;
+}
+
+.checkbox.checked::before {
+  content: '';
+  position: absolute;
+  top: 45%;
+  left: 50%;
+  width: 4px;
+  height: 8px;
+  border-bottom: 1px solid #6764f1;
+  border-right: 1px solid #6764f1;
+  transform: translate(-50%, -50%) rotate(45deg);
 }
 
 @media screen and (max-width: 1250px) {

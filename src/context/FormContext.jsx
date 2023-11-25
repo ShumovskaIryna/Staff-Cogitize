@@ -66,7 +66,6 @@ export const FormProvider = ({ children }) => {
   ]);
 
   const fetchData = async () => {
-    // it can be some api call
     setPositions(getFromLocalStorage());
   };
 
@@ -77,7 +76,7 @@ export const FormProvider = ({ children }) => {
     };
 
     setPositions([...roles, newData]);
-    setToLocalStorage(roles);
+    setToLocalStorage([...roles, newData]);
   };
 
   return (

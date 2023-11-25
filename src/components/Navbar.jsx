@@ -6,7 +6,7 @@ const Navbar = () => {
   const [selectedCategory, setSelectedCategory] = useState("Должности");
 
   return (
-    <div className="flex flex-row text-gray-300 justify-around">
+    <div className="flex flex-row text-gray-300 text-larger justify-around">
       <Link
         href="/hierarchy"
         onClick={() => setSelectedCategory("Иерархия")}

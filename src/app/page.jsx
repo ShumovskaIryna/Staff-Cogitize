@@ -142,26 +142,14 @@ export default function PositionsPage() {
         </div>
         <button
           type="button"
-          className="button text-white py-2 px-4 my-2 mb-6 rounded-md"
+          className="button text-white text-larger py-2 px-4 my-2 mb-2 rounded-md"
         >
           Создать новую должность
         </button>
       </div>
-      <div className="flex flex-col w-2/3 h-8/12 mt-3 mr-3 mb-5 ml-1 p-2 bg-light-grey rounded">
+      <div className="flex flex-col w-2/3 h-9/12 mt-3 mr-3 mb-3 ml-1 p-1 bg-light-grey rounded">
         <PositionsForm />
       </div>
     </main>
   );
 }
-
-const initialData = {
-  tasks: [
-    { id: 1, name: "Новобранец", salary: "$50", level: "10 заданий" },
-    { id: 2, name: "Рядовой", salary: "$80", level: "5 заданий" },
-    { id: 3, name: "Сержант", salary: "$100", level: "12 заданий" },
-    { id: 4, name: "Рядовой", salary: "$80", level: "20 заданий" },
-    { id: 5, name: "Новобранец", salary: "$50", level: "15 заданий" },
-    { id: 6, name: "Рядовой", salary: "$80", level: "20 заданий" },
-    { id: 7, name: "Новобранец", salary: "$50", level: "15 заданий" },
-  ],
-};
