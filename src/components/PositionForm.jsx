@@ -72,63 +72,77 @@ const PositionsForm = () => {
         (duty[`checkbox_${departmentIndex}_${dutyIndex}`] === true ? 1 : 0),
       0
     );
+    updatedDepartments[departmentIndex].count = trueCount;
 
-    const newFormData = {
+    setFormData({
       ...formData,
       departments: updatedDepartments,
       salary: `$${trueCount}0`,
       level: `${trueCount} заданий`,
-    };
-
-    setFormData(newFormData);
+    });
   };
   return (
     <form>
-      <div className="flex flex-col w-full my-1 mr-2 p-3 bg-dark-grey text-white rounded">
-        <label className="block text-gray-600 mb-2">Название</label>
-        <input
-          type="text"
-          name="name"
-          value={formContext.roles.name}
-          onChange={handleChange}
-          required
-          className="w-full text-gray-200 px-3 py-2 bg-dark-grey rounded-md focus:outline-none"
-        />
-      </div>
-      <div className="flex flex-col w-full my-2 mr-2 p-3 bg-dark-grey text-white rounded">
-        <label className="block text-gray-600 mb-2">Обязаности</label>
-        <div className="grid gap-1 grid-cols-2 grid-rows-2">
-          {formData.departments.map((department, index) => (
-            <label key={index} className="flex items-center mb-2">
-              <div className="flex flex-col text-gray-500">
-                {/* department name */}
-                {department.name}
-                {department?.duties?.map((duty, indexDuty) => (
-                  <label key={indexDuty} className="flex items-center mb-2">
-                    {/* Duty name & checkbox */}
-                    <div className="flex flex-col w-full text-white">
-                      {duty.name}
-                      <input
-                        type="checkbox"
-                        className="mr-2"
-                        name={`checkbox_${index}_${indexDuty}`}
-                        checked={duty[`checkbox_${index}_${indexDuty}`]}
-                        onChange={() => handleCheckBoxChange(index, indexDuty)}
-                      />
-                    </div>
-                  </label>
-                ))}
-              </div>
-            </label>
-          ))}
+      <div className="flex flex-col w-full h-8/12 m-1 justify-between">
+        <div className="flex flex-col mr-2 p-2 bg-dark-grey text-white rounded">
+          <label className="block text-gray-600 mb-2">Название</label>
+          <input
+            type="text"
+            name="name"
+            value={formContext.roles.name}
+            onChange={handleChange}
+            required
+            className="w-full text-larger text-gray-200 px-2 py-1 mb-1 bg-dark-grey rounded-md focus:outline-none"
+          />
         </div>
-        <button
-          type="button"
-          onClick={handleSubmit}
-          className="button w-full text-white py-2 px-4 rounded-md"
-        >
-          Сохранить
-        </button>
+        <div className="flex flex-col my-1 mr-2 p-2 pb-14 mb-3 bg-dark-grey text-white rounded">
+          <label className="block text-gray-600 mb-2">Обязаности</label>
+          <div className="grid grid-cols-2 grid-rows-2">
+            {formData.departments.map((department, index) => (
+              <div key={index} className="flex flex-col items-start mb-2">
+                {/* Department name */}
+                <span className="text-gray-500 mb-2">{department.name}</span>
+
+                {/* Duty checkboxes */}
+                <div className="flex flex-col ml-4 text-white">
+                  {department?.duties?.map((duty, indexDuty) => (
+                    <label key={indexDuty} className="flex items-center mb-1">
+                      {/* Duty name & checkbox */}
+                      <div className="flex items-center">
+                        <input
+                          type="checkbox"
+                          className="hidden"
+                          name={`checkbox_${index}_${indexDuty}`}
+                          checked={duty[`checkbox_${index}_${indexDuty}`]}
+                          onChange={() =>
+                            handleCheckBoxChange(index, indexDuty)
+                          }
+                        />
+                        <div
+                          className={`checkbox mr-2 ${
+                            duty[`checkbox_${index}_${indexDuty}`]
+                              ? "checked"
+                              : ""
+                          }`}
+                        ></div>
+                        <span className="text-gray-200">{duty.name}</span>
+                      </div>
+                    </label>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+        <div className="flex flex-col my-1 mr-1 p-1 mb-3">
+          <button
+            type="button"
+            onClick={handleSubmit}
+            className="button text-white text-larger py-2 ml-1 mr-2 rounded-md"
+          >
+            Сохранить
+          </button>
+        </div>
       </div>
     </form>
   );

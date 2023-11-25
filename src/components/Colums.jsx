@@ -23,8 +23,8 @@ const Column = ({ roles, placeholderProps }) => {
               {(draggableProvided, draggableSnapshot) => (
                 <Flex
                   className="flex text-white bg-light-grey rounded"
-                  mb="1rem"
-                  h="50px"
+                  mb="4px"
+                  h="45px"
                   rounded="3px"
                   p="1.5rem"
                   _active={{ bg: "#23792F" }}
@@ -44,11 +44,13 @@ const Column = ({ roles, placeholderProps }) => {
                   ref={draggableProvided.innerRef}
                 >
                   <div className="flex flex-row w-full justify-between">
-                    <Text className="flex flex-col my-5">
-                      <p className="text-gray-200 mb-1"> {task.name}</p>
-                      <p className="text-gray-600">{task.level}</p>
+                    <Text className="flex flex-col my-3">
+                      <p className="text-gray-200 text-larger mb-1">
+                        {task.name}
+                      </p>
+                      <p className="text-gray-600 text-sm/2">{task.level}</p>
                     </Text>
-                    <Text className="flex flex-row my-5">
+                    <Text className="flex flex-row my-3">
                       <p className="text-yellow-500 font-bold">{task.salary}</p>
                       <p className="text-gray-500">/час</p>
                     </Text>
