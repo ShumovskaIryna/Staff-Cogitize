@@ -44,10 +44,16 @@ const Column = ({ tasks, placeholderProps }) => {
                   ref={draggableProvided.innerRef}
                 >
                   <div className="flex flex-row w-full justify-between">
-                    <Text className="my-5">{task.content}</Text>
+                    <Text className="flex flex-col my-5">
+                      <p className="text-gray-200 mb-1"> {task.content}</p>
+                      <p className="text-gray-600">{task.level}</p>
+                    </Text>
                     <Text className="flex flex-row my-5">
-                      <p className="text-orange-700"> {task.salary}</p>
-                      <p className="text-gray-600">/час</p>
+                      <p className="text-yellow-500 font-bold">
+                        {" "}
+                        {task.salary}
+                      </p>
+                      <p className="text-gray-500">/час</p>
                     </Text>
                   </div>
                 </Flex>
