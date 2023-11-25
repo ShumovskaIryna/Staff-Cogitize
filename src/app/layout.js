@@ -2,6 +2,7 @@ import React from 'react';
 import { Inter } from 'next/font/google'
 import Navbar from "../components/Navbar";
 import './globals.css'
+import { FormProvider } from "@/context/FormContext";
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -13,6 +14,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
+      <FormProvider>
       <body className={inter.className}>
         <div className="fixed top-0 left-0 right-0 bottom-0 z-40 transp flex items-center justify-center">
           <div className="w-11/12 h-4/5 md:w-4/5 xl:w-3/5 py-3 bg-dark-grey rounded flex items-center justify-center">
@@ -23,6 +25,7 @@ export default function RootLayout({ children }) {
           </div>
         </div>
       </body>
+      </FormProvider>
     </html>
   )
 }
