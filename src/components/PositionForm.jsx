@@ -1,6 +1,7 @@
 "use client";
 import { useContext, useState, useEffect } from "react";
 import { FormContext } from "@/context/FormContext";
+import { DEPARTMENTS } from "../constants/constants";
 import "../app/globals.css";
 
 const PositionsForm = ({ chosenPosition }) => {
@@ -8,39 +9,7 @@ const PositionsForm = ({ chosenPosition }) => {
 
   const [formData, setFormData] = useState({
     name: chosenPosition ? chosenPosition.name : "",
-    departments: chosenPosition
-      ? chosenPosition.departments
-      : [
-          {
-            name: "Торговля",
-            duties: [
-              { name: "Продавать продукт", checkbox_0_0: false },
-              { name: "Виставлять цени", checkbox_0_1: false },
-              { name: "Смотреть аналитику", checkbox_0_2: false },
-            ],
-          },
-          {
-            name: "Производство",
-            duties: [
-              { name: "Закупать сирье", checkbox_1_0: false },
-              { name: "Назначать рабочих", checkbox_1_1: false },
-            ],
-          },
-          {
-            name: "Разборки",
-            duties: [
-              { name: "Дуель", checkbox_2_0: false },
-              { name: "Виставлять претензии", checkbox_2_1: false },
-            ],
-          },
-          {
-            name: "Управление",
-            duties: [
-              { name: "Назначать должности", checkbox_3_0: false },
-              { name: "Вигонять из банди", checkbox_3_1: false },
-            ],
-          },
-        ],
+    departments: chosenPosition ? chosenPosition.departments : DEPARTMENTS,
     salary: "$10",
     level: "0 заданий",
   });

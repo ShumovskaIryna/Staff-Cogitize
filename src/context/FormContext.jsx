@@ -1,40 +1,11 @@
 "use client";
 
 import React, { createContext, useState } from "react";
+import { DEPARTMENTS } from "../constants/constants";
 
 export const FormContext = createContext();
 
-const departments = [
-  {
-    name: "Торговля",
-    duties: [
-      { name: "Продавать продукт", checkbox_0_0: false },
-      { name: "Виставлять цени", checkbox_0_1: false },
-      { name: "Смотреть аналитику", checkbox_0_2: false },
-    ],
-  },
-  {
-    name: "Производство",
-    duties: [
-      { name: "Закупать сирье", checkbox_1_0: false },
-      { name: "Назначать рабочих", checkbox_1_1: false },
-    ],
-  },
-  {
-    name: "Разборки",
-    duties: [
-      { name: "Дуель", checkbox_2_0: false },
-      { name: "Виставлять претензии", checkbox_2_1: false },
-    ],
-  },
-  {
-    name: "Управление",
-    duties: [
-      { name: "Назначать должности", checkbox_3_0: false },
-      { name: "Вигонять из банди", checkbox_3_1: false },
-    ],
-  },
-];
+const departments = DEPARTMENTS;
 
 const mockedPositions = [
   {

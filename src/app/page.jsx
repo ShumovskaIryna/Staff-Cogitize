@@ -7,8 +7,9 @@ import { Flex } from "@chakra-ui/react";
 import PositionsForm from "../components/PositionForm";
 import { FormContext } from "../context/FormContext";
 import dynamic from "next/dynamic";
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useContext } from "react";
 import { DragDropContext } from "react-beautiful-dnd";
+import { DEPARTMENTS } from "../constants/constants";
 import "./globals.css";
 
 // Dynamic import for the Column component to prevent SSR
@@ -159,37 +160,7 @@ export default function PositionsPage() {
   const handleSubmit = (e) => {
     createDraftRole({
       name: "No-Name",
-      departments: [
-        {
-          name: "Торговля",
-          duties: [
-            { name: "Продавать продукт", checkbox_0_0: false },
-            { name: "Виставлять цени", checkbox_0_1: false },
-            { name: "Смотреть аналитику", checkbox_0_2: false },
-          ],
-        },
-        {
-          name: "Производство",
-          duties: [
-            { name: "Закупать сирье", checkbox_1_0: false },
-            { name: "Назначать рабочих", checkbox_1_1: false },
-          ],
-        },
-        {
-          name: "Разборки",
-          duties: [
-            { name: "Дуель", checkbox_2_0: false },
-            { name: "Виставлять претензии", checkbox_2_1: false },
-          ],
-        },
-        {
-          name: "Управление",
-          duties: [
-            { name: "Назначать должности", checkbox_3_0: false },
-            { name: "Вигонять из банди", checkbox_3_1: false },
-          ],
-        },
-      ],
+      departments: DEPARTMENTS,
       salary: "$0",
       level: "0 заданий",
     });
