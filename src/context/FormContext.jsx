@@ -4,14 +4,64 @@ import React, { createContext, useState } from "react";
 
 export const FormContext = createContext();
 
+const departments = [
+  {
+    name: "Торговля",
+    duties: [
+      { name: "Продавать продукт", checkbox_0_0: false },
+      { name: "Виставлять цени", checkbox_0_1: false },
+      { name: "Смотреть аналитику", checkbox_0_2: false },
+    ],
+  },
+  {
+    name: "Производство",
+    duties: [
+      { name: "Закупать сирье", checkbox_1_0: false },
+      { name: "Назначать рабочих", checkbox_1_1: false },
+    ],
+  },
+  {
+    name: "Разборки",
+    duties: [
+      { name: "Дуель", checkbox_2_0: false },
+      { name: "Виставлять претензии", checkbox_2_1: false },
+    ],
+  },
+  {
+    name: "Управление",
+    duties: [
+      { name: "Назначать должности", checkbox_3_0: false },
+      { name: "Вигонять из банди", checkbox_3_1: false },
+    ],
+  },
+];
+
 const mockedPositions = [
-  { id: 1, name: "Новобранец", salary: "$50", level: "10 заданий" },
-  { id: 2, name: "Рядовой", salary: "$80", level: "5 заданий" },
-  { id: 3, name: "Сержант", salary: "$100", level: "12 заданий" },
-  { id: 4, name: "Рядовой", salary: "$80", level: "20 заданий" },
-  { id: 5, name: "Новобранец", salary: "$50", level: "15 заданий" },
-  { id: 6, name: "Рядовой", salary: "$80", level: "20 заданий" },
-  { id: 7, name: "Новобранец", salary: "$50", level: "15 заданий" },
+  {
+    id: 1,
+    departments,
+    name: "Новобранец",
+    salary: "$50",
+    level: "10 заданий",
+  },
+  { id: 2, departments, name: "Рядовой", salary: "$80", level: "5 заданий" },
+  { id: 3, departments, name: "Сержант", salary: "$100", level: "12 заданий" },
+  { id: 4, departments, name: "Рядовой", salary: "$80", level: "20 заданий" },
+  {
+    id: 5,
+    departments,
+    name: "Новобранец",
+    salary: "$50",
+    level: "15 заданий",
+  },
+  { id: 6, departments, name: "Рядовой", salary: "$80", level: "20 заданий" },
+  {
+    id: 7,
+    departments,
+    name: "Новобранец",
+    salary: "$50",
+    level: "15 заданий",
+  },
 ];
 
 const getFromLocalStorage = () => {
@@ -69,14 +119,37 @@ export const FormProvider = ({ children }) => {
     setPositions(getFromLocalStorage());
   };
 
+  const getPositionById = (positionId) => {
+    const position = roles.find((pos) => pos.id === positionId);
+    return position || {};
+  };
+
   const updatePositionsState = (data) => {
+    const filtredPosition = roles.filter((role) => {
+      return role.id !== data.id;
+    });
+
+    setPositions([...filtredPosition, data]);
+    setToLocalStorage([...filtredPosition, data]);
+  };
+
+  const createDraftRole = (data) => {
     const newData = {
-      id: Date.now().toString(),
       ...data,
+      id: Date.now().toString(),
     };
 
     setPositions([...roles, newData]);
     setToLocalStorage([...roles, newData]);
+  };
+
+  const deleteRole = (id) => {
+    const filtredPosition = roles.filter((role) => {
+      return role.id !== id;
+    });
+
+    setPositions([...filtredPosition]);
+    setToLocalStorage([...filtredPosition]);
   };
 
   return (
@@ -86,6 +159,9 @@ export const FormProvider = ({ children }) => {
         roles,
         setPositions,
         updatePositionsState,
+        createDraftRole,
+        getPositionById,
+        deleteRole,
       }}
     >
       {children}

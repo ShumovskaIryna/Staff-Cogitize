@@ -1,47 +1,62 @@
 "use client";
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import { FormContext } from "@/context/FormContext";
 import "../app/globals.css";
 
-const PositionsForm = () => {
+const PositionsForm = ({ chosenPosition }) => {
   const formContext = useContext(FormContext);
 
   const [formData, setFormData] = useState({
-    name: "",
-    departments: [
-      {
-        name: "Торговля",
-        duties: [
-          { name: "Продавать продукт", checkbox_0_0: false },
-          { name: "Виставлять цени", checkbox_0_1: false },
-          { name: "Смотреть аналитику", checkbox_0_2: false },
+    name: chosenPosition ? chosenPosition.name : "",
+    departments: chosenPosition
+      ? chosenPosition.departments
+      : [
+          {
+            name: "Торговля",
+            duties: [
+              { name: "Продавать продукт", checkbox_0_0: false },
+              { name: "Виставлять цени", checkbox_0_1: false },
+              { name: "Смотреть аналитику", checkbox_0_2: false },
+            ],
+          },
+          {
+            name: "Производство",
+            duties: [
+              { name: "Закупать сирье", checkbox_1_0: false },
+              { name: "Назначать рабочих", checkbox_1_1: false },
+            ],
+          },
+          {
+            name: "Разборки",
+            duties: [
+              { name: "Дуель", checkbox_2_0: false },
+              { name: "Виставлять претензии", checkbox_2_1: false },
+            ],
+          },
+          {
+            name: "Управление",
+            duties: [
+              { name: "Назначать должности", checkbox_3_0: false },
+              { name: "Вигонять из банди", checkbox_3_1: false },
+            ],
+          },
         ],
-      },
-      {
-        name: "Производство",
-        duties: [
-          { name: "Закупать сирье", checkbox_1_0: false },
-          { name: "Назначать рабочих", checkbox_1_1: false },
-        ],
-      },
-      {
-        name: "Разборки",
-        duties: [
-          { name: "Дуель", checkbox_2_0: true },
-          { name: "Виставлять претензии", checkbox_2_1: true },
-        ],
-      },
-      {
-        name: "Управление",
-        duties: [
-          { name: "Назначать должности", checkbox_3_0: true },
-          { name: "Вигонять из банди", checkbox_3_1: true },
-        ],
-      },
-    ],
     salary: "$10",
     level: "0 заданий",
   });
+
+  useEffect(() => {
+    if (chosenPosition) {
+      // Set form data when the prop (entity) changes
+      setFormData({
+        ...chosenPosition,
+        name: chosenPosition.name,
+        // update other fields...
+      });
+    }
+  }, [chosenPosition]);
+
+  console.log("formData", formData);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -58,8 +73,7 @@ const PositionsForm = () => {
   };
 
   const handleCheckBoxChange = (departmentIndex, dutyIndex) => {
-    const updatedDepartments = [...formData.departments];
-
+    const updatedDepartments = JSON.parse(JSON.stringify(formData.departments));
     updatedDepartments[departmentIndex].duties[dutyIndex][
       `checkbox_${departmentIndex}_${dutyIndex}`
     ] =
@@ -83,22 +97,22 @@ const PositionsForm = () => {
   };
   return (
     <form>
-      <div className="flex flex-col w-full h-8/12 m-1 justify-between">
-        <div className="flex flex-col mr-2 p-2 bg-dark-grey text-white rounded">
+      <div className="relative flex flex-col w-full h-8/12 m-1 justify-between">
+        <div className="flex flex-col h-11/12 mr-2 p-2 bg-dark-grey text-white rounded">
           <label className="block text-gray-600 mb-2">Название</label>
           <input
             type="text"
             name="name"
-            value={formContext.roles.name}
+            value={formData.name}
             onChange={handleChange}
             required
             className="w-full text-larger text-gray-200 px-2 py-1 mb-1 bg-dark-grey rounded-md focus:outline-none"
           />
         </div>
-        <div className="flex flex-col my-1 mr-2 p-2 pb-14 mb-3 bg-dark-grey text-white rounded">
+        <div className="flex flex-col h-6/10 my-1 mr-2 p-2 pb-14 mb-3 bg-dark-grey overflow-scroll text-white rounded">
           <label className="block text-gray-600 mb-2">Обязаности</label>
           <div className="grid grid-cols-2 grid-rows-2">
-            {formData.departments.map((department, index) => (
+            {formData.departments?.map((department, index) => (
               <div key={index} className="flex flex-col items-start mb-2">
                 {/* Department name */}
                 <span className="text-gray-500 mb-2">{department.name}</span>
@@ -134,7 +148,7 @@ const PositionsForm = () => {
             ))}
           </div>
         </div>
-        <div className="flex flex-col my-1 mr-1 p-1 mb-3">
+        <div className="flex flex-col h-2/10 my-1 mr-1 p-1 mb-3">
           <button
             type="button"
             onClick={handleSubmit}

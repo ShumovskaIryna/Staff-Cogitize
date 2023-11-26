@@ -19,7 +19,14 @@ const reorderTasks = (tasks, startIndex, endIndex) => {
 
 export default function PositionsPage() {
   const queryAttr = "data-rbd-drag-handle-draggable-id";
-  const { roles, fetchData, setPositions } = useContext(FormContext);
+  const {
+    roles,
+    deleteRole,
+    fetchData,
+    setPositions,
+    createDraftRole,
+    getPositionById,
+  } = useContext(FormContext);
 
   useEffect(() => {
     fetchData();
@@ -119,10 +126,55 @@ export default function PositionsPage() {
     });
   };
 
+  const handleSubmit = (e) => {
+    createDraftRole({
+      name: "No-Name",
+      departments: [
+        {
+          name: "Торговля",
+          duties: [
+            { name: "Продавать продукт", checkbox_0_0: false },
+            { name: "Виставлять цени", checkbox_0_1: false },
+            { name: "Смотреть аналитику", checkbox_0_2: false },
+          ],
+        },
+        {
+          name: "Производство",
+          duties: [
+            { name: "Закупать сирье", checkbox_1_0: false },
+            { name: "Назначать рабочих", checkbox_1_1: false },
+          ],
+        },
+        {
+          name: "Разборки",
+          duties: [
+            { name: "Дуель", checkbox_2_0: false },
+            { name: "Виставлять претензии", checkbox_2_1: false },
+          ],
+        },
+        {
+          name: "Управление",
+          duties: [
+            { name: "Назначать должности", checkbox_3_0: false },
+            { name: "Вигонять из банди", checkbox_3_1: false },
+          ],
+        },
+      ],
+      salary: "$0",
+      level: "0 заданий",
+    });
+  };
+
+  const [positionId, setPositionId] = useState(roles?.[0]?.id);
+
+  const chosenPosition = getPositionById(positionId);
+
+  console.log(positionId);
+
   return (
     <main className="flex flex-row w-full h-full pb-8 justify-center">
       <div className="flex flex-col w-1/3 h-8/12 my-3 ml-3 mr-1 justify-between">
-        <div className="h-11/12 w-full overflow-y-scroll">
+        <div className="w-full h-11/12 overflow-y-scroll">
           <DragDropContext
             onDragStart={onDragStart}
             onDragUpdate={onDragUpdate}
@@ -136,19 +188,25 @@ export default function PositionsPage() {
               color="white-text"
               pb="2rem"
             >
-              <Column placeholderProps={placeholderProps} roles={roles} />
+              <Column
+                placeholderProps={placeholderProps}
+                roles={roles}
+                setId={setPositionId}
+                deleteRole={deleteRole}
+              />
             </Flex>
           </DragDropContext>
         </div>
         <button
           type="button"
+          onClick={handleSubmit}
           className="button text-white text-larger py-2 px-4 my-2 mb-2 rounded-md"
         >
           Создать новую должность
         </button>
       </div>
-      <div className="flex flex-col w-2/3 h-9/12 mt-3 mr-3 mb-3 ml-1 p-1 bg-light-grey rounded">
-        <PositionsForm />
+      <div className="flex flex-col w-2/3 h-8/12 mt-3 mr-3 mb-3 ml-1 p-1 bg-light-grey rounded">
+        <PositionsForm chosenPosition={chosenPosition} />
       </div>
     </main>
   );
