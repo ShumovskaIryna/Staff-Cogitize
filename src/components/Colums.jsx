@@ -44,7 +44,7 @@ const Column = ({ roles, setId, deleteRole }) => {
                   {...draggableProvided.draggableProps}
                   ref={draggableProvided.innerRef}
                 >
-                  <div className="flex flex-row w-full justify-between">
+                  <div className="relative flex flex-row w-full justify-between">
                     <Text className="flex flex-col my-3">
                       <p className="text-gray-200 text-larger mb-1">
                         {task.name}
@@ -55,7 +55,12 @@ const Column = ({ roles, setId, deleteRole }) => {
                       <p className="text-yellow-500 font-bold">{task.salary}</p>
                       <p className="text-gray-500">/час</p>
                     </Text>
-                    <button onClick={() => deleteRole(task.id)}>Delete</button>
+                    <button
+                      className="text-sm text-red-800 rotate-45"
+                      onClick={() => deleteRole(task.id)}
+                    >
+                      +
+                    </button>
                   </div>
                 </Flex>
               )}
