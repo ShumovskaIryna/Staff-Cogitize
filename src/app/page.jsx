@@ -1,5 +1,8 @@
+/**
+ * PositionsPage component for managing roles and duties.
+ * @component
+ */
 "use client";
-
 import { Flex } from "@chakra-ui/react";
 import PositionsForm from "../components/PositionForm";
 import { FormContext } from "../context/FormContext";
@@ -8,8 +11,16 @@ import React, { useState, useEffect, useContext } from "react";
 import { DragDropContext } from "react-beautiful-dnd";
 import "./globals.css";
 
+// Dynamic import for the Column component to prevent SSR
 const Column = dynamic(() => import("../components/Colums"), { ssr: false });
 
+/**
+ * Reorders tasks in the list based on the drag-and-drop operation.
+ * @param {Array} tasks - The list of tasks to be reordered.
+ * @param {number} startIndex - The index of the task being dragged.
+ * @param {number} endIndex - The index where the task is dropped.
+ * @returns {Array} - The reordered list of tasks.
+ */
 const reorderTasks = (tasks, startIndex, endIndex) => {
   const newTaskList = Array.from(tasks);
   const [removed] = newTaskList.splice(startIndex, 1);
@@ -17,23 +28,26 @@ const reorderTasks = (tasks, startIndex, endIndex) => {
   return newTaskList;
 };
 
+/**
+ * Main component for managing roles and duties.
+ * @returns {JSX.Element} - The JSX element representing the PositionsPage.
+ */
 export default function PositionsPage() {
+  // Attribute for querying draggable elements
   const queryAttr = "data-rbd-drag-handle-draggable-id";
-  const {
-    roles,
-    deleteRole,
-    fetchData,
-    setPositions,
-    createDraftRole,
-    getPositionById,
-  } = useContext(FormContext);
 
-  useEffect(() => {
-    fetchData();
-  }, []);
+  // Form context for managing state
+  const { roles, deleteRole, setPositions, createDraftRole, getPositionById } =
+    useContext(FormContext);
 
+  // State for managing the placeholder during drag-and-drop
   const [placeholderProps, setPlaceholderProps] = useState({});
 
+  /**
+   * Gets the dragged DOM element based on the draggableId.
+   * @param {string} draggableId - The ID of the dragged element.
+   * @returns {HTMLElement} - The dragged DOM element.
+   */
   const getDraggedDom = (draggableId) => {
     const domQuery = `[${queryAttr}='${draggableId}']`;
     const draggedDOM = document.querySelector(domQuery);
@@ -41,6 +55,10 @@ export default function PositionsPage() {
     return draggedDOM;
   };
 
+  /**
+   * Handles the end of a drag-and-drop operation.
+   * @param {Object} result - The result object from react-beautiful-dnd.
+   */
   const onDragEnd = (result) => {
     const { source, destination } = result;
     if (!destination) return;
@@ -55,6 +73,10 @@ export default function PositionsPage() {
     setPositions(newTasks);
   };
 
+  /**
+   * Handles updates during a drag-and-drop operation.
+   * @param {Object} result - The result object from react-beautiful-dnd.
+   */
   const onDragUpdate = (result) => {
     const { source, destination, draggableId } = result;
 
@@ -96,6 +118,10 @@ export default function PositionsPage() {
     });
   };
 
+  /**
+   * Handles the start of a drag-and-drop operation.
+   * @param {Object} result - The result object from react-beautiful-dnd.
+   */
   const onDragStart = (result) => {
     const { source, draggableId } = result;
     const draggedDOM = getDraggedDom(draggableId);
@@ -126,6 +152,10 @@ export default function PositionsPage() {
     });
   };
 
+  /**
+   * Handles the submission of a new role.
+   * @param {Event} e - The submit event.
+   */
   const handleSubmit = (e) => {
     createDraftRole({
       name: "No-Name",
@@ -165,11 +195,11 @@ export default function PositionsPage() {
     });
   };
 
+  // State for managing the chosen position
   const [positionId, setPositionId] = useState(roles?.[0]?.id);
 
+  // Get the chosen position based on the ID
   const chosenPosition = getPositionById(positionId);
-
-  console.log(positionId);
 
   return (
     <main className="flex flex-row w-full h-full pb-8 justify-center">

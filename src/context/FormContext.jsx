@@ -78,42 +78,7 @@ const setToLocalStorage = (data) => {
 };
 
 export const FormProvider = ({ children }) => {
-  const [roles, setPositions] = useState([
-    {
-      name: "",
-      departments: [
-        {
-          name: "Торговля",
-          duties: [
-            { name: "Продавать продукт", checked: false },
-            { name: "Виставлять цени", checked: false },
-            { name: "Смотреть аналитику", checked: false },
-          ],
-        },
-        {
-          name: "Производство",
-          duties: [
-            { name: "Закупать сирье", checked: false },
-            { name: "Назначать рабочих", checked: false },
-          ],
-        },
-        {
-          name: "Разборки",
-          duties: [
-            { name: "Дуель", checked: true },
-            { name: "Виставлять претензии", checked: true },
-          ],
-        },
-        {
-          name: "Управление",
-          duties: [
-            { name: "Назначать должности", checked: true },
-            { name: "Вигонять из банди", checked: true },
-          ],
-        },
-      ],
-    },
-  ]);
+  const [roles, setPositions] = useState([]);
 
   const fetchData = async () => {
     setPositions(getFromLocalStorage());

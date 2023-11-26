@@ -56,7 +56,7 @@ const PositionsForm = ({ chosenPosition }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    formContext.updatePositionsState(formData);
+    formContext?.updatePositionsState(formData);
   };
 
   const handleChange = (e) => {
