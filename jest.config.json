@@ -1,0 +1,9 @@
+{
+  "testEnvironment": "jest-environment-jsdom",
+    "testMatch": ["**/__tests__/**/*.test.js"],
+    "moduleDirectories": ["node_modules", "src"],
+    "moduleNameMapper": {
+      "@/(.*)$": "<rootDir>/src/$1",
+      "\\.css$": "identity-obj-proxy"
+    }
+}

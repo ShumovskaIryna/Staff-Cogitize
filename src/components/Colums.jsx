@@ -4,7 +4,7 @@ import { Draggable } from "react-beautiful-dnd";
 import { Droppable } from "react-beautiful-dnd";
 import "../app/globals.css";
 
-const Column = ({ roles, placeholderProps }) => {
+const Column = ({ roles, setId, deleteRole }) => {
   return (
     <Droppable droppableId="col">
       {(droppableProvided) => (
@@ -27,8 +27,9 @@ const Column = ({ roles, placeholderProps }) => {
                   h="45px"
                   rounded="3px"
                   p="1.5rem"
-                  _active={{ bg: "#23792F" }}
+                  _active={{ bg: "#303038" }}
                   outline="2px solid"
+                  onClick={() => setId(task.id)}
                   outlineColor={
                     draggableSnapshot.isDragging ? "card-border" : "transparent"
                   }
@@ -43,7 +44,7 @@ const Column = ({ roles, placeholderProps }) => {
                   {...draggableProvided.draggableProps}
                   ref={draggableProvided.innerRef}
                 >
-                  <div className="flex flex-row w-full justify-between">
+                  <div className="relative flex flex-row w-full justify-between">
                     <Text className="flex flex-col my-3">
                       <p className="text-gray-200 text-larger mb-1">
                         {task.name}
@@ -54,6 +55,12 @@ const Column = ({ roles, placeholderProps }) => {
                       <p className="text-yellow-500 font-bold">{task.salary}</p>
                       <p className="text-gray-500">/час</p>
                     </Text>
+                    <button
+                      className="text-sm text-red-800 rotate-45"
+                      onClick={() => deleteRole(task.id)}
+                    >
+                      +
+                    </button>
                   </div>
                 </Flex>
               )}
